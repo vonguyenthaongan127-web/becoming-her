@@ -28,7 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* ── Background texture ── */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0;
@@ -38,10 +37,8 @@
     pointer-events: none;
   }
 
-  /* ── Layout ── */
   #app { position: relative; z-index: 1; }
 
-  /* ── Header ── */
   header {
     text-align: center;
     padding: 3.5rem 1rem 2rem;
@@ -72,7 +69,6 @@
     font-weight: 300;
   }
 
-  /* ── Breadcrumb ── */
   #breadcrumb {
     display: flex; align-items: center; gap: 0.5rem;
     max-width: 860px; margin: 0 auto 1.2rem;
@@ -86,7 +82,6 @@
   #breadcrumb span:hover { opacity: 1; text-decoration: underline; }
   #breadcrumb .sep { opacity: 0.4; cursor: default; }
 
-  /* ── Stats bar ── */
   #statsBar {
     display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
     max-width: 860px; margin: 0 auto 2rem;
@@ -109,7 +104,6 @@
   }
   .stat-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender); }
 
-  /* ── View container ── */
   #viewContainer {
     max-width: 860px; margin: 0 auto;
     padding: 0 1.5rem 6rem;
@@ -120,7 +114,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── Section title ── */
   .view-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.6rem;
@@ -138,7 +131,6 @@
     font-weight: 300;
   }
 
-  /* ── YEAR grid ── */
   .year-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -178,7 +170,6 @@
   .year-dot.filled { opacity: 1; }
   .year-label-small { font-size: 0.65rem; color: var(--lavender); margin-top: 4px; display: block; }
 
-  /* ── MONTH grid ── */
   .month-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -210,7 +201,6 @@
   }
   .month-bar-fill { height: 100%; background: var(--rose); border-radius: 2px; transition: width 0.4s; }
 
-  /* ── DAY grid ── */
   .day-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -247,7 +237,6 @@
     font-size: 0.5rem; color: var(--gold); line-height: 1;
   }
 
-  /* ── Pill tabs ── */
   .pill-row {
     display: flex; gap: 8px; margin-bottom: 1.4rem; flex-wrap: wrap;
   }
@@ -262,7 +251,74 @@
   .pill:hover { border-color: var(--rose); background: rgba(245,221,224,0.4); }
   .pill.active { background: var(--rose); color: white; border-color: var(--rose); }
 
-  /* ── Modals ── */
+  /* Today CTA banner */
+  .today-cta {
+    background: rgba(232,160,168,0.12);
+    border: 0.5px solid rgba(232,160,168,0.45);
+    border-radius: 14px;
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: all 0.18s;
+  }
+  .today-cta:hover {
+    background: rgba(232,160,168,0.22);
+    border-color: var(--rose);
+    transform: translateY(-1px);
+  }
+  .today-cta.has-entry {
+    background: rgba(138,171,148,0.1);
+    border-color: rgba(138,171,148,0.45);
+  }
+  .today-cta.has-entry:hover {
+    background: rgba(138,171,148,0.2);
+    border-color: var(--sage);
+  }
+  .today-cta-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--deep);
+    white-space: nowrap;
+  }
+  .today-cta-text {
+    font-size: 0.78rem;
+    color: var(--lavender);
+  }
+  .today-cta-arrow {
+    font-size: 0.85rem;
+    color: var(--rose);
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  /* Month nav header */
+  .month-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.4rem;
+  }
+  .month-nav-row .view-title { margin-bottom: 0; }
+  .month-nav-btns { display: flex; gap: 6px; }
+  .month-nav-btn {
+    background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.4rem 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--deep);
+    cursor: pointer;
+    transition: all 0.18s;
+    line-height: 1;
+  }
+  .month-nav-btn:hover { border-color: var(--rose); background: rgba(245,221,224,0.4); }
+
   .modal-overlay {
     display: none; position: fixed; inset: 0; z-index: 100;
     background: rgba(42,26,28,0.45);
@@ -273,7 +329,7 @@
   .modal-box {
     background: var(--cream);
     border-radius: 24px;
-    width: 100%; max-width: 460px;
+    width: 100%; max-width: 480px;
     max-height: 92vh; overflow-y: auto;
     padding: 2rem;
     border: 0.5px solid var(--border);
@@ -291,7 +347,6 @@
   }
   .modal-title em { font-style: italic; }
 
-  /* ── Form elements ── */
   .field { margin-bottom: 1.2rem; }
   .field label {
     display: block; font-size: 0.72rem;
@@ -319,6 +374,59 @@
   .score-item input[type=range] { width: 100%; accent-color: var(--rose); }
   .score-item .sval { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--deep); display: block; margin-top: 4px; font-weight: 600; }
 
+  /* Journal 3-section layout */
+  .journal-sections { margin-bottom: 1rem; }
+  .journal-section {
+    border-radius: 14px;
+    border: 0.5px solid var(--border);
+    background: rgba(255,255,255,0.5);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .journal-section:focus-within {
+    border-color: var(--rose);
+    background: rgba(255,255,255,0.85);
+  }
+  .journal-section.js-growth { border-left: 2.5px solid var(--sage); }
+  .journal-section.js-heart  { border-left: 2.5px solid var(--rose); }
+  .journal-section.js-self   { border-left: 2.5px solid var(--lavender); }
+  .journal-section-hdr {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding: 0.6rem 0.9rem 0.35rem;
+    border-bottom: 0.5px solid rgba(107,58,64,0.07);
+  }
+  .js-icon { font-size: 0.95rem; }
+  .js-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    font-weight: 400;
+  }
+  .js-prompt {
+    font-size: 0.75rem;
+    color: var(--deep);
+    opacity: 0.55;
+    font-style: italic;
+    margin-left: 0.25rem;
+  }
+  .journal-section textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0.65rem 0.9rem 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    resize: none;
+    outline: none;
+    line-height: 1.65;
+    display: block;
+  }
+
   .btn-row { display: flex; gap: 8px; margin-top: 1.4rem; }
   .btn {
     flex: 1; padding: 0.85rem;
@@ -337,7 +445,6 @@
   .btn-danger { background: transparent; border: 0.5px solid rgba(200,80,80,0.3); color: #c05050; font-size: 0.75rem; padding: 0.5rem; flex: none; width: auto; }
   .btn-danger:hover { background: rgba(200,80,80,0.08); }
 
-  /* ── Result toast ── */
   #toast {
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(4px);
     background: var(--deep); color: white;
@@ -349,7 +456,6 @@
   }
   #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ── Export btn ── */
   #exportBtn {
     position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50;
     background: rgba(255,255,255,0.85);
@@ -362,12 +468,10 @@
   }
   #exportBtn:hover { background: white; border-color: var(--rose); }
 
-  /* ── Mood color key ── */
   .mood-key { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
   .mood-dot { width: 10px; height: 10px; border-radius: 50%; }
   .mood-key-item { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--lavender); }
 
-  /* ── Chapter label ── */
   .chapter-tag {
     display: inline-block;
     font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -376,7 +480,6 @@
     margin-bottom: 0.4rem;
   }
 
-  /* ── Life chapters ── */
   .chapter-section { margin-bottom: 2rem; }
   .chapter-title {
     font-family: 'Cormorant Garamond', serif;
@@ -388,7 +491,6 @@
   }
   .chapter-title small { font-size: 0.7rem; color: var(--lavender); font-family: 'DM Sans', sans-serif; }
 
-  /* ── Search ── */
   #searchBar {
     width: 100%; background: rgba(255,255,255,0.7);
     border: 0.5px solid var(--border); border-radius: 12px;
@@ -407,7 +509,6 @@
   .search-result .sr-date { font-size: 0.7rem; color: var(--lavender); letter-spacing: 0.1em; text-transform: uppercase; }
   .search-result .sr-text { font-size: 0.85rem; color: var(--ink); margin-top: 4px; line-height: 1.5; }
 
-  /* ── Achievement board ── */
   .achieve-section { margin-bottom: 2.2rem; }
   .achieve-year-label {
     font-family: 'Cormorant Garamond', serif;
@@ -453,7 +554,6 @@
   .achieve-status.dream { background: rgba(169,154,187,0.2); color: var(--lavender); }
   .achieve-snippet { font-size: 0.78rem; color: var(--ink); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
 
-  /* ── Chapter tag on year card ── */
   .year-chapters { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
   .year-ch-pill {
     font-size: 0.55rem; padding: 1px 5px; border-radius: 99px;
@@ -461,13 +561,83 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;
   }
 
-  /* ── Empty state ── */
   .empty-state {
     text-align: center; padding: 3rem 1rem;
     color: var(--lavender); font-size: 0.9rem; line-height: 1.8;
   }
   .empty-state .es-icon { font-size: 2.5rem; display: block; margin-bottom: 0.8rem; opacity: 0.5; }
 
+  /* ── Tag chip input ── */
+  .tag-field-label {
+    display: block; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--lavender); margin-bottom: 0.5rem; font-weight: 400;
+  }
+  .tag-input-box {
+    min-height: 46px;
+    background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.45rem 0.75rem;
+    cursor: text;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    transition: border-color 0.2s;
+  }
+  .tag-input-box:focus-within { border-color: var(--rose); }
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.18), rgba(232,160,168,0.18));
+    border: 0.5px solid rgba(201,169,110,0.4);
+    color: var(--deep);
+    border-radius: 99px;
+    padding: 3px 8px 3px 11px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    white-space: nowrap;
+    animation: chipIn 0.2s cubic-bezier(0.34,1.5,0.64,1) both;
+  }
+  @keyframes chipIn {
+    from { opacity: 0; transform: scale(0.75); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .tag-chip-x {
+    background: none; border: none; cursor: pointer;
+    color: var(--lavender); font-size: 1rem; line-height: 1;
+    padding: 0 1px; margin: 0;
+    transition: color 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%;
+  }
+  .tag-chip-x:hover { color: var(--deep); background: rgba(107,58,64,0.1); }
+  .tag-input-box input[type=text] {
+    border: none; background: transparent; outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--ink);
+    flex: 1; min-width: 110px;
+    padding: 4px 2px;
+    caret-color: var(--rose);
+  }
+  .tag-hint {
+    font-size: 0.67rem; color: var(--lavender);
+    margin-top: 5px; letter-spacing: 0.03em;
+    opacity: 0.8;
+  }
+  /* Achievement card tags */
+  .ach-tag {
+    display: inline-block;
+    background: rgba(201,169,110,0.14);
+    border: 0.5px solid rgba(201,169,110,0.32);
+    color: var(--deep); border-radius: 99px;
+    padding: 2px 9px; font-size: 0.78rem;
+    margin-right: 4px; margin-bottom: 3px;
+  }
+
+  @media (max-width: 480px) {
     .day-grid { gap: 4px; }
     .day-cell { font-size: 0.7rem; border-radius: 7px; }
     .score-row { grid-template-columns: 1fr; }
@@ -492,6 +662,7 @@
 <div class="modal-overlay" id="entryModal">
   <div class="modal-box">
     <h2 class="modal-title" id="entryTitle">Reflection</h2>
+
     <div class="score-row field">
       <div class="score-item">
         <span class="icon">🌱</span>
@@ -512,13 +683,45 @@
         <span class="sval" id="vSelf">3</span>
       </div>
     </div>
-    <div class="field">
-      <label>Today's reflection</label>
-      <textarea id="journalText" rows="5" placeholder="What happened today? What did you feel?"></textarea>
+
+    <div class="journal-sections">
+      <div class="journal-section js-growth">
+        <div class="journal-section-hdr">
+          <span class="js-icon">🌱</span>
+          <span class="js-label">Growth</span>
+          <span class="js-prompt">What did you learn or improve today?</span>
+        </div>
+        <textarea id="journalGrowth" rows="3" placeholder="Share your growth moment…"></textarea>
+      </div>
+      <div class="journal-section js-heart">
+        <div class="journal-section-hdr">
+          <span class="js-icon">💖</span>
+          <span class="js-label">Heart</span>
+          <span class="js-prompt">What did you feel or appreciate today?</span>
+        </div>
+        <textarea id="journalHeart" rows="3" placeholder="Your feelings and gratitude…"></textarea>
+      </div>
+      <div class="journal-section js-self">
+        <div class="journal-section-hdr">
+          <span class="js-icon">✨</span>
+          <span class="js-label">Self</span>
+          <span class="js-prompt">How did you take care of yourself today?</span>
+        </div>
+        <textarea id="journalSelf" rows="3" placeholder="Self-care and well-being…"></textarea>
+      </div>
     </div>
+
     <div class="field">
-      <label>Chapter / tag (optional)</label>
-      <textarea id="chapterText" rows="1" placeholder="e.g. First job, Moving abroad, Healing…" style="resize:none;"></textarea>
+      <span class="tag-field-label">Chapters &amp; tags (optional)</span>
+      <div class="tag-input-box" id="tagInputBox" onclick="focusTagInput()">
+        <div id="tagChips" style="display:contents;"></div>
+        <input type="text" id="tagInput"
+               placeholder="Type a chapter, press Enter…"
+               onkeydown="handleTagKey(event)"
+               oninput="handleTagInput(event)"
+               autocomplete="off">
+      </div>
+      <p class="tag-hint">Press Enter or , to add &nbsp;·&nbsp; Backspace to remove last &nbsp;·&nbsp; click × to remove any</p>
     </div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -557,16 +760,18 @@ const db         = getFirestore(fbApp);
 const journalRef = doc(db, 'becoming-her', 'journal');
 const LOCAL_BACKUP_KEY = 'becoming-her-journal-backup';
 
-// Sync indicator
 function setSyncDot(s) {
   const el = document.getElementById('syncDot');
   if (el) el.className = s;
 }
 
 // ─── State ─────────────────────────────────────────────────────────────────
+const today = new Date();
+
 let data = {};
-let view = { mode: 'years', year: null, month: null };
+let view = { mode: 'days', year: today.getFullYear(), month: today.getMonth() + 1 };
 let editingDate = null;
+let currentTags = [];
 const LIFE_YEARS = 90;
 
 const BIRTH_DATE = new Date(2005, 9, 22); // October 22, 2005
@@ -587,7 +792,6 @@ function daysUntilBirthday() {
 function daysAlive() {
   return Math.floor((today - BIRTH_DATE) / 86400000);
 }
-const today = new Date();
 
 function todayStr() {
   return fmtDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
@@ -600,6 +804,67 @@ function firstDayOfMonth(y, m) { return new Date(y, m-1, 1).getDay(); }
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS_SHORT = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+// ─── Journal text helpers ──────────────────────────────────────────────────
+function getJournalText(e) {
+  if (!e) return '';
+  return [e.journalGrowth, e.journalHeart, e.journalSelf, e.journal]
+    .filter(Boolean).join(' ');
+}
+function getSnippet(e, len = 100) {
+  const full = getJournalText(e);
+  return full.slice(0, len) + (full.length > len ? '…' : '');
+}
+
+// ─── Chapter/tag helpers ───────────────────────────────────────────────────
+function getChaptersFor(e) {
+  if (!e) return [];
+  if (Array.isArray(e.chapters) && e.chapters.length) return e.chapters;
+  if (e.chapter && e.chapter.trim()) return [e.chapter.trim()];
+  return [];
+}
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Tag chip UI ───────────────────────────────────────────────────────────
+function renderTagChips() {
+  const box = document.getElementById('tagChips');
+  if (!box) return;
+  box.innerHTML = currentTags.map((t, i) =>
+    `<span class="tag-chip">${escapeHtml(t)}<button class="tag-chip-x" onclick="removeTag(${i})" tabindex="-1" title="Remove">×</button></span>`
+  ).join('');
+}
+function addTag(raw) {
+  raw.split(',').map(s => s.trim()).filter(Boolean).forEach(tag => {
+    if (!currentTags.includes(tag)) currentTags.push(tag);
+  });
+  renderTagChips();
+}
+function removeTag(i) {
+  currentTags.splice(i, 1);
+  renderTagChips();
+  document.getElementById('tagInput').focus();
+}
+function handleTagKey(e) {
+  const inp = e.target;
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = inp.value.replace(/,/g, '').trim();
+    if (val) { addTag(val); inp.value = ''; }
+  } else if (e.key === 'Backspace' && inp.value === '' && currentTags.length) {
+    removeTag(currentTags.length - 1);
+  }
+}
+function handleTagInput(e) {
+  if (e.target.value.includes(',')) {
+    addTag(e.target.value);
+    e.target.value = '';
+  }
+}
+function focusTagInput() {
+  document.getElementById('tagInput')?.focus();
+}
 
 // ─── Persistence — Firebase ────────────────────────────────────────────────
 function readLocalBackup() {
@@ -623,7 +888,6 @@ function load() {
   setSyncDot('syncing');
   data = readLocalBackup();
   render();
-  // Live listener — updates on ALL devices instantly
   onSnapshot(journalRef, snap => {
     if (snap.exists()) {
       data = snap.data().entries || {};
@@ -665,7 +929,7 @@ function calcStreak() {
   return streak;
 }
 function renderStats() {
-  const { total, points, streak } = calcStats();
+  const { total, streak } = calcStats();
   const age = getAgeToday();
   const alive = daysAlive().toLocaleString();
   const bday = daysUntilBirthday();
@@ -685,32 +949,41 @@ function renderBreadcrumb() {
   let parts = [];
   if (view.mode === 'search') {
     parts = [
-      `<span onclick="setView('years')">All years</span>`,
+      `<span onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</span>`,
       `<span class="sep">›</span>`,
       `<span>Search</span>`
     ];
   } else if (view.mode === 'achievements') {
     parts = [
-      `<span onclick="setView('years')">All years</span>`,
+      `<span onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</span>`,
       `<span class="sep">›</span>`,
       `<span>✦ Achievements</span>`
     ];
   } else if (view.mode === 'years') {
-    parts = [`<span>All years</span>`];
+    parts = [`<span>Life Timeline</span>`];
   } else if (view.mode === 'months') {
     parts = [
-      `<span onclick="setView('years')">All years</span>`,
+      `<span onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</span>`,
+      `<span class="sep">›</span>`,
+      `<span onclick="setView('years')">Life Timeline</span>`,
       `<span class="sep">›</span>`,
       `<span>${view.year}</span>`
     ];
   } else if (view.mode === 'days') {
-    parts = [
-      `<span onclick="setView('years')">All years</span>`,
-      `<span class="sep">›</span>`,
-      `<span onclick="setView('months', view.year)">${view.year}</span>`,
-      `<span class="sep">›</span>`,
-      `<span>${MONTHS[view.month-1]}</span>`
-    ];
+    const isToday = view.year === today.getFullYear() && view.month === (today.getMonth()+1);
+    if (isToday) {
+      parts = [`<span>Today · ${MONTHS[view.month-1]} ${today.getFullYear()}</span>`];
+    } else {
+      parts = [
+        `<span onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</span>`,
+        `<span class="sep">›</span>`,
+        `<span onclick="setView('years')">Life Timeline</span>`,
+        `<span class="sep">›</span>`,
+        `<span onclick="setView('months',${view.year})">${view.year}</span>`,
+        `<span class="sep">›</span>`,
+        `<span>${MONTHS[view.month-1]}</span>`
+      ];
+    }
   }
   bc.innerHTML = parts.join('');
 }
@@ -725,13 +998,21 @@ function render() {
   renderBreadcrumb();
   const vc = document.getElementById('viewContainer');
   vc.style.animation = 'none';
-  vc.offsetHeight; // reflow
+  vc.offsetHeight;
   vc.style.animation = '';
   if (view.mode === 'years')         renderYears();
-  else if (view.mode === 'months')       renderMonths();
-  else if (view.mode === 'days')         renderDays();
-  else if (view.mode === 'search')       renderSearch();
+  else if (view.mode === 'months')   renderMonths();
+  else if (view.mode === 'days')     renderDays();
+  else if (view.mode === 'search')   renderSearch();
   else if (view.mode === 'achievements') renderAchievements();
+}
+
+// ─── Month navigation ──────────────────────────────────────────────────────
+function navMonth(delta) {
+  let y = view.year, m = view.month + delta;
+  if (m > 12) { m = 1; y++; }
+  if (m < 1)  { m = 12; y--; }
+  setView('days', y, m);
 }
 
 // ─── Years view ────────────────────────────────────────────────────────────
@@ -755,7 +1036,6 @@ function renderYears() {
   const startYear = birthYear;
   const endYear = birthYear + LIFE_YEARS;
 
-  // Group years by chapter
   const chapters = {};
   for (let y = startYear; y <= endYear; y++) {
     const ch = getChapterLabel(y);
@@ -763,7 +1043,6 @@ function renderYears() {
     chapters[ch].push(y);
   }
 
-  // Count entries per year
   const yearCounts = {};
   Object.keys(data).forEach(k => {
     const y = parseInt(k.slice(0,4));
@@ -773,14 +1052,14 @@ function renderYears() {
   const vc = document.getElementById('viewContainer');
   let html = `
     <div class="pill-row">
-      <div class="pill active">Life map</div>
+      <div class="pill" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+      <div class="pill active">Life Timeline</div>
       <div class="pill" onclick="setView('achievements')">✦ Achievements</div>
       <div class="pill" onclick="setView('search')">Search</div>
     </div>
   `;
 
   Object.entries(chapters).forEach(([ch, years]) => {
-    const chHasEntries = years.some(y => yearCounts[y] > 0);
     html += `<div class="chapter-section">
       <div class="chapter-title">${ch} <small>${years[0]}–${years[years.length-1]}</small></div>
       <div class="year-grid">`;
@@ -791,18 +1070,16 @@ function renderYears() {
       let cls = '';
       if (isCurrent) cls = 'is-current';
       else if (count > 0) cls = 'has-entries';
-      // Mini dots: show up to 12 dots representing months
       let dots = '';
       for (let m = 1; m <= 12; m++) {
         const mKey = `${y}-${String(m).padStart(2,'0')}`;
         const filled = Object.keys(data).some(k => k.startsWith(mKey));
         dots += `<div class="year-dot ${filled ? 'filled' : ''}"></div>`;
       }
-      // Collect unique chapter tags for this year
       const yearChapters = [...new Set(
         Object.entries(data)
-          .filter(([k,e]) => parseInt(k.slice(0,4)) === y && e.chapter)
-          .map(([,e]) => e.chapter)
+          .filter(([k]) => parseInt(k.slice(0,4)) === y)
+          .flatMap(([,e]) => getChaptersFor(e))
       )].slice(0, 3);
       const chapHtml = yearChapters.length
         ? `<div class="year-chapters">${yearChapters.map(c => `<span class="year-ch-pill">${c}</span>`).join('')}</div>`
@@ -828,7 +1105,14 @@ function renderMonths() {
   const vc = document.getElementById('viewContainer');
 
   const ageInYear = y - BIRTH_DATE.getFullYear();
-  let html = `<div class="view-title">${y} <small>${ageInYear >= 0 ? `age ${ageInYear}–${ageInYear+1}` : ''}</small></div>
+  let html = `
+    <div class="pill-row">
+      <div class="pill" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+      <div class="pill" onclick="setView('years')">Life Timeline</div>
+      <div class="pill" onclick="setView('achievements')">✦ Achievements</div>
+      <div class="pill" onclick="setView('search')">Search</div>
+    </div>
+    <div class="view-title">${y} <small>${ageInYear >= 0 ? `age ${ageInYear}–${ageInYear+1}` : ''}</small></div>
     <div class="month-grid">`;
   for (let m = 1; m <= 12; m++) {
     const mStr = `${y}-${String(m).padStart(2,'0')}`;
@@ -836,11 +1120,10 @@ function renderMonths() {
     const days = daysInMonth(y, m);
     const pct = Math.round((count / days) * 100);
     const isCurrent = y === currentYear && m === currentMonth;
-    // Collect chapter tags for this month
     const mChapters = [...new Set(
       Object.entries(data)
-        .filter(([k,e]) => k.startsWith(mStr) && e.chapter)
-        .map(([,e]) => e.chapter)
+        .filter(([k]) => k.startsWith(mStr))
+        .flatMap(([,e]) => getChaptersFor(e))
     )].slice(0,2);
     const mChapHtml = mChapters.length
       ? `<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;">${mChapters.map(c=>`<span style="font-size:0.6rem;padding:1px 7px;border-radius:99px;background:rgba(201,169,110,0.15);color:var(--gold);">${c}</span>`).join('')}</div>`
@@ -862,12 +1145,29 @@ function renderDays() {
   const totalDays = daysInMonth(y, m);
   const firstDay = firstDayOfMonth(y, m);
   const todayKey = todayStr();
+  const isCurrentMonth = (y === today.getFullYear() && m === (today.getMonth() + 1));
   const vc = document.getElementById('viewContainer');
 
-  let html = `<div class="view-title">${MONTHS[m-1]} ${y}</div>
-    <div class="day-grid">`;
+  // Navigation pills
+  let html = `<div class="pill-row">
+    <div class="pill ${isCurrentMonth ? 'active' : ''}" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+    <div class="pill" onclick="setView('years')">Life Timeline</div>
+    <div class="pill" onclick="setView('achievements')">✦ Achievements</div>
+    <div class="pill" onclick="setView('search')">Search</div>
+  </div>`;
+
+  // Month header with prev/next
+  html += `<div class="month-nav-row">
+    <div class="view-title" style="margin-bottom:0;">${MONTHS[m-1]} ${y}</div>
+    <div class="month-nav-btns">
+      <button class="month-nav-btn" onclick="navMonth(-1)">‹</button>
+      <button class="month-nav-btn" onclick="navMonth(1)">›</button>
+    </div>
+  </div>`;
+
+  // Calendar grid
+  html += `<div class="day-grid">`;
   DAYS_SHORT.forEach(d => { html += `<div class="day-header">${d}</div>`; });
-  // empty cells before first
   for (let i = 0; i < firstDay; i++) html += `<div class="day-cell empty"></div>`;
   for (let d = 1; d <= totalDays; d++) {
     const key = fmtDate(y, m, d);
@@ -883,17 +1183,38 @@ function renderDays() {
   }
   html += `</div>`;
 
+  // Today CTA banner
+  if (isCurrentMonth) {
+    const todayEntry = data[todayKey];
+    const todayDate = `${MONTHS[m-1]} ${today.getDate()}`;
+    if (!todayEntry) {
+      html += `<div class="today-cta" onclick="openEntry('${todayKey}')">
+        <span class="today-cta-date">${todayDate}</span>
+        <span class="today-cta-text">Begin today's reflection</span>
+        <span class="today-cta-arrow">→</span>
+      </div>`;
+    } else {
+      html += `<div class="today-cta has-entry" onclick="openEntry('${todayKey}')">
+        <span class="today-cta-date">${todayDate}</span>
+        <span class="today-cta-text">Continue today's reflection</span>
+        <span class="today-cta-arrow">→</span>
+      </div>`;
+    }
+  }
+
   // Journal list below calendar
   const monthEntries = Object.entries(data)
     .filter(([k]) => k.startsWith(`${y}-${String(m).padStart(2,'0')}`))
     .sort(([a],[b]) => a.localeCompare(b));
   if (monthEntries.length > 0) {
-    html += `<div style="margin-top:2rem;">`;
+    html += `<div style="margin-top:1.5rem;">`;
     monthEntries.forEach(([k, e]) => {
       const day = parseInt(k.slice(8));
-      const short = e.journal ? e.journal.slice(0, 100) + (e.journal.length > 100 ? '…' : '') : '';
+      const short = getSnippet(e, 100);
+      const eTags = getChaptersFor(e);
+      const eTagStr = eTags.length ? ` · ${eTags.join(', ')}` : '';
       html += `<div class="search-result" onclick="openEntry('${k}')">
-        <div class="sr-date">${MONTHS[m-1]} ${day}, ${y}${e.chapter ? ` · ${e.chapter}` : ''} · ${starsFor(e)} ★</div>
+        <div class="sr-date">${MONTHS[m-1]} ${day}, ${y}${eTagStr} · ${starsFor(e)} ★</div>
         <div class="sr-text">${short || '<em style="opacity:0.5">No text written</em>'}</div>
       </div>`;
     });
@@ -907,29 +1228,28 @@ function renderDays() {
 function renderAchievements() {
   const vc = document.getElementById('viewContainer');
 
-  // Gather all entries with a chapter tag, plus allow future-dated entries as "dreams"
   const allTagged = Object.entries(data)
-    .filter(([, e]) => e.chapter && e.chapter.trim())
+    .filter(([, e]) => getChaptersFor(e).length > 0)
     .sort(([a], [b]) => a.localeCompare(b));
 
   if (!allTagged.length) {
     vc.innerHTML = `
       <div class="pill-row">
-        <div class="pill" onclick="setView('years')">Life map</div>
+        <div class="pill" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+        <div class="pill" onclick="setView('years')">Life Timeline</div>
         <div class="pill active">✦ Achievements</div>
         <div class="pill" onclick="setView('search')">Search</div>
       </div>
       <div class="empty-state">
         <span class="es-icon">✦</span>
         No achievements yet.<br>
-        Open any day and add a <strong>Chapter / tag</strong><br>
+        Open any day and add <strong>Chapters &amp; tags</strong><br>
         — like <em>"First job"</em> or <em>"Moving abroad"</em> —<br>
         and it will appear here.
       </div>`;
     return;
   }
 
-  // Group by year
   const byYear = {};
   allTagged.forEach(([k, e]) => {
     const y = parseInt(k.slice(0, 4));
@@ -937,19 +1257,20 @@ function renderAchievements() {
     byYear[y].push({ key: k, entry: e });
   });
 
-  // Also group by chapter name for "chapter view"
   const byChapter = {};
   allTagged.forEach(([k, e]) => {
-    const ch = e.chapter.trim();
-    if (!byChapter[ch]) byChapter[ch] = [];
-    byChapter[ch].push({ key: k, entry: e });
+    getChaptersFor(e).forEach(ch => {
+      if (!byChapter[ch]) byChapter[ch] = [];
+      byChapter[ch].push({ key: k, entry: e });
+    });
   });
 
   const isFutureKey = k => k > todayStr();
 
   let html = `
     <div class="pill-row">
-      <div class="pill" onclick="setView('years')">Life map</div>
+      <div class="pill" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+      <div class="pill" onclick="setView('years')">Life Timeline</div>
       <div class="pill active">✦ Achievements</div>
       <div class="pill" onclick="setView('search')">Search</div>
     </div>
@@ -959,15 +1280,12 @@ function renderAchievements() {
     </div>
     <div id="achContent"></div>`;
   vc.innerHTML = html;
-
-  // Render initial year view
   renderAchByYear(byYear, isFutureKey);
 }
 
 function switchAchView(mode) {
-  // Re-collect
   const allTagged = Object.entries(data)
-    .filter(([, e]) => e.chapter && e.chapter.trim())
+    .filter(([, e]) => getChaptersFor(e).length > 0)
     .sort(([a], [b]) => a.localeCompare(b));
   const isFutureKey = k => k > todayStr();
   const byYear = {};
@@ -976,9 +1294,10 @@ function switchAchView(mode) {
     const y = parseInt(k.slice(0, 4));
     if (!byYear[y]) byYear[y] = [];
     byYear[y].push({ key: k, entry: e });
-    const ch = e.chapter.trim();
-    if (!byChapter[ch]) byChapter[ch] = [];
-    byChapter[ch].push({ key: k, entry: e });
+    getChaptersFor(e).forEach(ch => {
+      if (!byChapter[ch]) byChapter[ch] = [];
+      byChapter[ch].push({ key: k, entry: e });
+    });
   });
   document.getElementById('achByYear').classList.toggle('active', mode === 'year');
   document.getElementById('achByChapter').classList.toggle('active', mode === 'chapter');
@@ -989,9 +1308,11 @@ function switchAchView(mode) {
 function achCardHtml(k, e, isFutureKey) {
   const [y, m, d] = k.split('-').map(Number);
   const future = isFutureKey(k);
-  const snippet = (e.journal || '').slice(0, 80) + ((e.journal || '').length > 80 ? '…' : '');
+  const snippet = getSnippet(e, 80);
+  const tags = getChaptersFor(e);
+  const tagsHtml = tags.map(t => `<span class="ach-tag">${escapeHtml(t)}</span>`).join('');
   return `<div class="achieve-card ${future ? 'future' : ''}" onclick="openEntry('${k}')">
-    <div class="achieve-name">${e.chapter}</div>
+    <div class="achieve-name" style="margin-bottom:6px;">${tagsHtml}</div>
     <div class="achieve-meta">
       <span>${MONTHS[m-1]} ${d}, ${y}</span>
       <span class="achieve-status ${future ? 'dream' : 'done'}">${future ? 'dream' : 'done'}</span>
@@ -1041,7 +1362,14 @@ function renderAchByChapter(byChapter, isFutureKey) {
 // ─── Search view ───────────────────────────────────────────────────────────
 function renderSearch() {
   const vc = document.getElementById('viewContainer');
-  vc.innerHTML = `<div class="view-title">Search journal</div>
+  vc.innerHTML = `
+    <div class="pill-row">
+      <div class="pill" onclick="setView('days',${today.getFullYear()},${today.getMonth()+1})">Today</div>
+      <div class="pill" onclick="setView('years')">Life Timeline</div>
+      <div class="pill" onclick="setView('achievements')">✦ Achievements</div>
+      <div class="pill active">Search</div>
+    </div>
+    <div class="view-title">Search journal</div>
     <input id="searchBar" placeholder="Search by word, chapter, or date…" oninput="doSearch(this.value)" autofocus>
     <div id="searchResults"></div>`;
 }
@@ -1053,16 +1381,21 @@ function doSearch(q) {
     .filter(([k,e]) =>
       k.includes(lq) ||
       (e.journal||'').toLowerCase().includes(lq) ||
-      (e.chapter||'').toLowerCase().includes(lq)
+      (e.journalGrowth||'').toLowerCase().includes(lq) ||
+      (e.journalHeart||'').toLowerCase().includes(lq) ||
+      (e.journalSelf||'').toLowerCase().includes(lq) ||
+      getChaptersFor(e).some(t => t.toLowerCase().includes(lq))
     )
     .sort(([a],[b]) => b.localeCompare(a))
     .slice(0, 40);
   if (!matches.length) { container.innerHTML = '<p style="color:var(--lavender);font-size:0.85rem;">No entries found.</p>'; return; }
   container.innerHTML = matches.map(([k,e]) => {
     const [y,m,d] = k.split('-').map(Number);
-    const short = (e.journal||'').slice(0,120) + ((e.journal||'').length > 120 ? '…' : '');
+    const short = getSnippet(e, 120);
+    const sTags = getChaptersFor(e);
+    const sTagStr = sTags.length ? ` · ${sTags.join(', ')}` : '';
     return `<div class="search-result" onclick="openEntry('${k}')">
-      <div class="sr-date">${MONTHS[m-1]} ${d}, ${y}${e.chapter ? ` · ${e.chapter}` : ''} · ${starsFor(e)} ★</div>
+      <div class="sr-date">${MONTHS[m-1]} ${d}, ${y}${sTagStr} · ${starsFor(e)} ★</div>
       <div class="sr-text">${short || '<em style="opacity:0.5">No text</em>'}</div>
     </div>`;
   }).join('');
@@ -1090,23 +1423,40 @@ function openEntry(key) {
   document.getElementById('vGrowth').textContent = e.growth || 3;
   document.getElementById('vHeart').textContent = e.heart || 3;
   document.getElementById('vSelf').textContent = e.self || 3;
-  document.getElementById('journalText').value = e.journal || '';
-  document.getElementById('chapterText').value = e.chapter || '';
+
+  // Populate 3 journal sections; fall back to legacy single journal field for old entries
+  const hasNewFields = e.journalGrowth || e.journalHeart || e.journalSelf;
+  document.getElementById('journalGrowth').value = e.journalGrowth || (!hasNewFields && e.journal ? e.journal : '');
+  document.getElementById('journalHeart').value = e.journalHeart || '';
+  document.getElementById('journalSelf').value = e.journalSelf || '';
+
+  currentTags = getChaptersFor(e).slice();
+  renderTagChips();
+  const tagInput = document.getElementById('tagInput');
+  if (tagInput) tagInput.value = '';
   document.getElementById('deleteBtn').style.display = data[key] ? '' : 'none';
   document.getElementById('entryModal').classList.add('open');
 }
 function closeModal() {
   document.getElementById('entryModal').classList.remove('open');
   editingDate = null;
+  currentTags = [];
 }
 async function saveEntry() {
   if (!editingDate) return;
   const growth = parseInt(document.getElementById('sGrowth').value);
-  const heart = parseInt(document.getElementById('sHeart').value);
-  const self = parseInt(document.getElementById('sSelf').value);
-  const journal = document.getElementById('journalText').value.trim();
-  const chapter = document.getElementById('chapterText').value.trim();
-  data[editingDate] = { growth, heart, self, journal, chapter, ts: Date.now() };
+  const heart  = parseInt(document.getElementById('sHeart').value);
+  const self   = parseInt(document.getElementById('sSelf').value);
+  const journalGrowth = document.getElementById('journalGrowth').value.trim();
+  const journalHeart  = document.getElementById('journalHeart').value.trim();
+  const journalSelf   = document.getElementById('journalSelf').value.trim();
+  // flush any uncommitted text in the tag input
+  const pendingTag = document.getElementById('tagInput').value.trim();
+  if (pendingTag) { addTag(pendingTag); document.getElementById('tagInput').value = ''; }
+  const chapters = [...currentTags];
+  const chapter  = chapters.join(', '); // backward-compat string
+  const journal = [journalGrowth, journalHeart, journalSelf].filter(Boolean).join('\n\n');
+  data[editingDate] = { growth, heart, self, journalGrowth, journalHeart, journalSelf, journal, chapters, chapter, ts: Date.now() };
   await save();
   closeModal();
   showToast(`Saved · ${starsFor(data[editingDate])} ★`);
@@ -1146,18 +1496,23 @@ document.getElementById('entryModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ─── Expose to global scope (required for type="module") ──────────────────
-window.setView     = setView;
-window.openEntry   = openEntry;
-window.closeModal  = closeModal;
-window.saveEntry   = saveEntry;
-window.deleteEntry = deleteEntry;
-window.exportData  = exportData;
-window.doSearch    = doSearch;
+// ─── Expose to global scope ────────────────────────────────────────────────
+window.setView       = setView;
+window.openEntry     = openEntry;
+window.closeModal    = closeModal;
+window.saveEntry     = saveEntry;
+window.deleteEntry   = deleteEntry;
+window.exportData    = exportData;
+window.doSearch      = doSearch;
 window.switchAchView = switchAchView;
+window.navMonth      = navMonth;
+window.removeTag     = removeTag;
+window.handleTagKey  = handleTagKey;
+window.handleTagInput = handleTagInput;
+window.focusTagInput = focusTagInput;
 
 // ─── Init ──────────────────────────────────────────────────────────────────
-load(); // starts Firestore live listener → calls render() on first data
+load();
 </script>
 </body>
 </html>
