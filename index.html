@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Becoming Her</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:    #e8a0a8;
+    --blush:   #f5dde0;
+    --deep:    #6b3a40;
+    --ink:     #2a1a1c;
+    --mist:    #faf6f6;
+    --gold:    #c9a96e;
+    --sage:    #8aab94;
+    --lavender:#a99abb;
+    --cream:   #fff8f5;
+    --border:  rgba(107,58,64,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Background texture ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 10%, rgba(232,160,168,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 90%, rgba(169,154,187,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Layout ── */
+  #app { position: relative; z-index: 1; }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 3.5rem 1rem 2rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    display: block;
+    width: 60px; height: 1px;
+    background: var(--rose);
+    margin: 1.2rem auto 0;
+  }
+  .title-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--deep);
+    line-height: 1;
+  }
+  .title-main em { font-style: italic; color: var(--rose); }
+  .subtitle {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+
+  /* ── Breadcrumb ── */
+  #breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    max-width: 860px; margin: 0 auto 1.2rem;
+    padding: 0 1.5rem;
+    font-size: 0.8rem;
+    color: var(--deep);
+    opacity: 0.7;
+    flex-wrap: wrap;
+  }
+  #breadcrumb span { cursor: pointer; transition: opacity 0.2s; }
+  #breadcrumb span:hover { opacity: 1; text-decoration: underline; }
+  #breadcrumb .sep { opacity: 0.4; cursor: default; }
+
+  /* ── Stats bar ── */
+  #statsBar {
+    display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    max-width: 860px; margin: 0 auto 2rem;
+    padding: 0 1.5rem;
+  }
+  .stat {
+    text-align: center;
+    background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 0.8rem 1.4rem;
+    min-width: 90px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--deep);
+    display: block;
+  }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender); }
+
+  /* ── View container ── */
+  #viewContainer {
+    max-width: 860px; margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+    animation: fadeUp 0.35s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Section title ── */
+  .view-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 1.4rem;
+    display: flex; align-items: baseline; gap: 0.7rem;
+  }
+  .view-title small {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    font-weight: 300;
+  }
+
+  /* ── YEAR grid ── */
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+  .year-card {
+    background: rgba(255,255,255,0.75);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem 0.7rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .year-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(107,58,64,0.10);
+    border-color: var(--rose);
+  }
+  .year-card.has-entries { border-color: rgba(232,160,168,0.5); }
+  .year-card.is-current { border-color: var(--rose); background: rgba(245,221,224,0.35); }
+  .year-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--deep);
+    display: block;
+  }
+  .year-dot-row {
+    display: flex; gap: 3px; justify-content: center; margin-top: 6px; flex-wrap: wrap;
+  }
+  .year-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--rose); opacity: 0.5;
+  }
+  .year-dot.filled { opacity: 1; }
+  .year-label-small { font-size: 0.65rem; color: var(--lavender); margin-top: 4px; display: block; }
+
+  /* ── MONTH grid ── */
+  .month-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .month-card {
+    background: rgba(255,255,255,0.75);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.1rem 1rem;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    position: relative;
+  }
+  .month-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(107,58,64,0.10);
+    border-color: var(--rose);
+  }
+  .month-card.has-entries { border-color: rgba(232,160,168,0.5); }
+  .month-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--deep); display: block; margin-bottom: 4px;
+  }
+  .month-count { font-size: 0.72rem; color: var(--lavender); }
+  .month-bar {
+    height: 3px; background: var(--blush); border-radius: 2px; margin-top: 8px; overflow: hidden;
+  }
+  .month-bar-fill { height: 100%; background: var(--rose); border-radius: 2px; transition: width 0.4s; }
+
+  /* ── DAY grid ── */
+  .day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .day-header {
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    padding: 4px 0 8px;
+    font-weight: 400;
+  }
+  .day-cell {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+    position: relative;
+    border: 0.5px solid transparent;
+    color: var(--deep);
+  }
+  .day-cell:hover { transform: scale(1.12); background: rgba(232,160,168,0.18); border-color: var(--rose); }
+  .day-cell.empty { cursor: default; pointer-events: none; opacity: 0; }
+  .day-cell.today { border-color: var(--rose); background: rgba(245,221,224,0.5); font-weight: 500; }
+  .day-cell.has-entry { background: var(--rose); color: white; border-color: var(--rose); }
+  .day-cell.has-entry:hover { transform: scale(1.12); background: var(--deep); }
+  .day-cell .star-badge {
+    position: absolute; top: 1px; right: 2px;
+    font-size: 0.5rem; color: var(--gold); line-height: 1;
+  }
+
+  /* ── Pill tabs ── */
+  .pill-row {
+    display: flex; gap: 8px; margin-bottom: 1.4rem; flex-wrap: wrap;
+  }
+  .pill {
+    font-size: 0.75rem; padding: 6px 14px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border);
+    cursor: pointer; transition: all 0.18s;
+    color: var(--deep); font-weight: 400;
+  }
+  .pill:hover { border-color: var(--rose); background: rgba(245,221,224,0.4); }
+  .pill.active { background: var(--rose); color: white; border-color: var(--rose); }
+
+  /* ── Modals ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(42,26,28,0.45);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    border-radius: 24px;
+    width: 100%; max-width: 460px;
+    max-height: 92vh; overflow-y: auto;
+    padding: 2rem;
+    border: 0.5px solid var(--border);
+    box-shadow: 0 24px 80px rgba(42,26,28,0.18);
+    animation: modalIn 0.28s cubic-bezier(0.34,1.4,0.64,1) both;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    color: var(--deep); margin-bottom: 1.4rem;
+  }
+  .modal-title em { font-style: italic; }
+
+  /* ── Form elements ── */
+  .field { margin-bottom: 1.2rem; }
+  .field label {
+    display: block; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--lavender); margin-bottom: 0.5rem; font-weight: 400;
+  }
+  .field textarea {
+    width: 100%; background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border); border-radius: 12px;
+    padding: 0.8rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; color: var(--ink); resize: none; outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.65;
+  }
+  .field textarea:focus { border-color: var(--rose); }
+
+  .score-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .score-item {
+    background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 0.7rem 0.6rem; text-align: center;
+  }
+  .score-item .icon { font-size: 1.1rem; display: block; margin-bottom: 4px; }
+  .score-item .slabel { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender); display: block; margin-bottom: 6px; }
+  .score-item input[type=range] { width: 100%; accent-color: var(--rose); }
+  .score-item .sval { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--deep); display: block; margin-top: 4px; font-weight: 600; }
+
+  .btn-row { display: flex; gap: 8px; margin-top: 1.4rem; }
+  .btn {
+    flex: 1; padding: 0.85rem;
+    border-radius: 12px; border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    cursor: pointer; transition: all 0.18s;
+  }
+  .btn-ghost {
+    background: rgba(255,255,255,0.6);
+    border: 0.5px solid var(--border); color: var(--deep);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.95); }
+  .btn-primary { background: var(--rose); color: white; box-shadow: 0 4px 14px rgba(232,160,168,0.4); }
+  .btn-primary:hover { background: var(--deep); box-shadow: none; }
+  .btn-danger { background: transparent; border: 0.5px solid rgba(200,80,80,0.3); color: #c05050; font-size: 0.75rem; padding: 0.5rem; flex: none; width: auto; }
+  .btn-danger:hover { background: rgba(200,80,80,0.08); }
+
+  /* ── Result toast ── */
+  #toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(4px);
+    background: var(--deep); color: white;
+    border-radius: 99px; padding: 0.65rem 1.4rem;
+    font-size: 0.82rem; font-weight: 400;
+    opacity: 0; pointer-events: none; z-index: 200;
+    transition: opacity 0.25s, transform 0.25s;
+    white-space: nowrap;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── Export btn ── */
+  #exportBtn {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50;
+    background: rgba(255,255,255,0.85);
+    border: 0.5px solid var(--border);
+    border-radius: 99px; padding: 0.55rem 1.1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.75rem;
+    color: var(--deep); cursor: pointer; backdrop-filter: blur(6px);
+    transition: all 0.2s;
+    box-shadow: 0 2px 12px rgba(107,58,64,0.10);
+  }
+  #exportBtn:hover { background: white; border-color: var(--rose); }
+
+  /* ── Mood color key ── */
+  .mood-key { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+  .mood-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mood-key-item { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--lavender); }
+
+  /* ── Chapter label ── */
+  .chapter-tag {
+    display: inline-block;
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 99px;
+    background: rgba(169,154,187,0.15); color: var(--lavender);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── Life chapters ── */
+  .chapter-section { margin-bottom: 2rem; }
+  .chapter-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 400;
+    color: var(--deep); margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .chapter-title small { font-size: 0.7rem; color: var(--lavender); font-family: 'DM Sans', sans-serif; }
+
+  /* ── Search ── */
+  #searchBar {
+    width: 100%; background: rgba(255,255,255,0.7);
+    border: 0.5px solid var(--border); border-radius: 12px;
+    padding: 0.7rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--ink); outline: none; margin-bottom: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  #searchBar:focus { border-color: var(--rose); }
+
+  .search-result {
+    background: rgba(255,255,255,0.75); border: 0.5px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: 8px; cursor: pointer;
+    transition: border-color 0.18s;
+  }
+  .search-result:hover { border-color: var(--rose); }
+  .search-result .sr-date { font-size: 0.7rem; color: var(--lavender); letter-spacing: 0.1em; text-transform: uppercase; }
+  .search-result .sr-text { font-size: 0.85rem; color: var(--ink); margin-top: 4px; line-height: 1.5; }
+
+  /* ── Achievement board ── */
+  .achieve-section { margin-bottom: 2.2rem; }
+  .achieve-year-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .achieve-year-label .yr-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    background: rgba(201,169,110,0.15); color: var(--gold);
+    padding: 2px 9px; border-radius: 99px;
+  }
+  .achieve-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .achieve-card {
+    background: rgba(255,255,255,0.8);
+    border: 0.5px solid rgba(201,169,110,0.35);
+    border-radius: 16px; padding: 1rem 1.1rem;
+    cursor: pointer; transition: transform 0.18s, box-shadow 0.18s;
+    position: relative; overflow: hidden;
+  }
+  .achieve-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--rose));
+  }
+  .achieve-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(201,169,110,0.18); }
+  .achieve-card.future { border-color: rgba(169,154,187,0.3); opacity: 0.75; }
+  .achieve-card.future::before { background: linear-gradient(90deg, var(--lavender), #c9b8d8); }
+  .achieve-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 400; color: var(--deep);
+    margin-bottom: 4px; line-height: 1.3;
+  }
+  .achieve-meta { font-size: 0.7rem; color: var(--lavender); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .achieve-status {
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 99px;
+  }
+  .achieve-status.done { background: rgba(138,171,148,0.2); color: var(--sage); }
+  .achieve-status.dream { background: rgba(169,154,187,0.2); color: var(--lavender); }
+  .achieve-snippet { font-size: 0.78rem; color: var(--ink); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
+
+  /* ── Chapter tag on year card ── */
+  .year-chapters { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
+  .year-ch-pill {
+    font-size: 0.55rem; padding: 1px 5px; border-radius: 99px;
+    background: rgba(201,169,110,0.18); color: var(--gold);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--lavender); font-size: 0.9rem; line-height: 1.8;
+  }
+  .empty-state .es-icon { font-size: 2.5rem; display: block; margin-bottom: 0.8rem; opacity: 0.5; }
+
+    .day-grid { gap: 4px; }
+    .day-cell { font-size: 0.7rem; border-radius: 7px; }
+    .score-row { grid-template-columns: 1fr; }
+    .year-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1 class="title-main">Becoming <em>Her</em></h1>
+    <p class="subtitle">A lifetime of reflections</p>
+  </header>
+
+  <div id="statsBar"></div>
+  <div id="breadcrumb"></div>
+
+  <div id="viewContainer"></div>
+</div>
+
+<!-- Day entry modal -->
+<div class="modal-overlay" id="entryModal">
+  <div class="modal-box">
+    <h2 class="modal-title" id="entryTitle">Reflection</h2>
+    <div class="score-row field">
+      <div class="score-item">
+        <span class="icon">🌱</span>
+        <span class="slabel">Growth</span>
+        <input type="range" id="sGrowth" min="1" max="5" step="1" value="3" oninput="document.getElementById('vGrowth').textContent=this.value">
+        <span class="sval" id="vGrowth">3</span>
+      </div>
+      <div class="score-item">
+        <span class="icon">💖</span>
+        <span class="slabel">Heart</span>
+        <input type="range" id="sHeart" min="1" max="5" step="1" value="3" oninput="document.getElementById('vHeart').textContent=this.value">
+        <span class="sval" id="vHeart">3</span>
+      </div>
+      <div class="score-item">
+        <span class="icon">✨</span>
+        <span class="slabel">Self</span>
+        <input type="range" id="sSelf" min="1" max="5" step="1" value="3" oninput="document.getElementById('vSelf').textContent=this.value">
+        <span class="sval" id="vSelf">3</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Today's reflection</label>
+      <textarea id="journalText" rows="5" placeholder="What happened today? What did you feel?"></textarea>
+    </div>
+    <div class="field">
+      <label>Chapter / tag (optional)</label>
+      <textarea id="chapterText" rows="1" placeholder="e.g. First job, Moving abroad, Healing…" style="resize:none;"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="deleteBtn" onclick="deleteEntry()">Delete</button>
+      <button class="btn btn-primary" onclick="saveEntry()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="syncDot" style="position:fixed;top:1rem;right:1rem;z-index:200;width:8px;height:8px;border-radius:50%;background:rgba(107,58,64,0.2);transition:background 0.4s;" title="Sync status"></div>
+<style>
+#syncDot.synced{background:#4caf82;box-shadow:0 0 6px #4caf82}
+#syncDot.syncing{background:var(--gold);animation:syncPulse 1s infinite}
+#syncDot.error{background:var(--rose)}
+@keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+<button id="exportBtn" onclick="exportData()">⬇ Export</button>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, setDoc, onSnapshot
+       } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ─── Firebase ──────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyBDb8hCgAOoL7v4VlxJRpYFY4d9WQ3wje4",
+  authDomain:        "becomgingher.firebaseapp.com",
+  projectId:         "becomgingher",
+  storageBucket:     "becomgingher.firebasestorage.app",
+  messagingSenderId: "1033973423256",
+  appId:             "1:1033973423256:web:af341142e4c68db1de44ed"
+};
+const fbApp      = initializeApp(firebaseConfig, 'becoming-her');
+const db         = getFirestore(fbApp);
+const journalRef = doc(db, 'becoming-her', 'journal');
+const LOCAL_BACKUP_KEY = 'becoming-her-journal-backup';
+
+// Sync indicator
+function setSyncDot(s) {
+  const el = document.getElementById('syncDot');
+  if (el) el.className = s;
+}
+
+// ─── State ─────────────────────────────────────────────────────────────────
+let data = {};
+let view = { mode: 'years', year: null, month: null };
+let editingDate = null;
+const LIFE_YEARS = 90;
+
+const BIRTH_DATE = new Date(2005, 9, 22); // October 22, 2005
+const urlBirth = new URL(location.href).searchParams.get('birth');
+const birthYear = urlBirth ? parseInt(urlBirth) : BIRTH_DATE.getFullYear();
+
+function getAgeToday() {
+  const y = today.getFullYear() - BIRTH_DATE.getFullYear();
+  const m = today.getMonth() - BIRTH_DATE.getMonth();
+  const d = today.getDate() - BIRTH_DATE.getDate();
+  return (m < 0 || (m === 0 && d < 0)) ? y - 1 : y;
+}
+function daysUntilBirthday() {
+  const next = new Date(today.getFullYear(), BIRTH_DATE.getMonth(), BIRTH_DATE.getDate());
+  if (next < today) next.setFullYear(today.getFullYear() + 1);
+  return Math.ceil((next - today) / 86400000);
+}
+function daysAlive() {
+  return Math.floor((today - BIRTH_DATE) / 86400000);
+}
+const today = new Date();
+
+function todayStr() {
+  return fmtDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+}
+function fmtDate(y, m, d) {
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+function firstDayOfMonth(y, m) { return new Date(y, m-1, 1).getDay(); }
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS_SHORT = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+// ─── Persistence — Firebase ────────────────────────────────────────────────
+function readLocalBackup() {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_BACKUP_KEY) || '{}');
+  } catch(e) {
+    console.warn('Could not read local journal backup', e);
+    return {};
+  }
+}
+
+function writeLocalBackup() {
+  try {
+    localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(data));
+  } catch(e) {
+    console.warn('Could not save local journal backup', e);
+  }
+}
+
+function load() {
+  setSyncDot('syncing');
+  data = readLocalBackup();
+  render();
+  // Live listener — updates on ALL devices instantly
+  onSnapshot(journalRef, snap => {
+    if (snap.exists()) {
+      data = snap.data().entries || {};
+      writeLocalBackup();
+    } else if (Object.keys(data).length) {
+      save();
+      return;
+    }
+    setSyncDot('synced');
+    render();
+  }, () => setSyncDot('error'));
+}
+
+async function save() {
+  setSyncDot('syncing');
+  writeLocalBackup();
+  try {
+    await setDoc(journalRef, { entries: data }, { merge: true });
+    setSyncDot('synced');
+  } catch(e) { setSyncDot('error'); console.error(e); }
+}
+
+// ─── Stats ─────────────────────────────────────────────────────────────────
+function calcStats() {
+  const keys = Object.keys(data);
+  const total = keys.length;
+  const points = keys.reduce((s,k) => s + (data[k].growth||0) + (data[k].heart||0) + (data[k].self||0), 0);
+  const streak = calcStreak();
+  return { total, points, streak };
+}
+function calcStreak() {
+  let d = new Date(today); let streak = 0;
+  while (true) {
+    const key = fmtDate(d.getFullYear(), d.getMonth()+1, d.getDate());
+    if (data[key]) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+    if (streak > 9999) break;
+  }
+  return streak;
+}
+function renderStats() {
+  const { total, points, streak } = calcStats();
+  const age = getAgeToday();
+  const alive = daysAlive().toLocaleString();
+  const bday = daysUntilBirthday();
+  const bdayLabel = bday === 0 ? '🎂 Today!' : `${bday}d to birthday`;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat"><span class="stat-num">${age}</span><span class="stat-label">Years old</span></div>
+    <div class="stat"><span class="stat-num">${alive}</span><span class="stat-label">Days alive</span></div>
+    <div class="stat"><span class="stat-num">${total}</span><span class="stat-label">Days written</span></div>
+    <div class="stat"><span class="stat-num">${streak}</span><span class="stat-label">Day streak</span></div>
+    <div class="stat"><span class="stat-num" style="font-size:1rem;">${bdayLabel}</span><span class="stat-label">Oct 22</span></div>
+  `;
+}
+
+// ─── Breadcrumb ────────────────────────────────────────────────────────────
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  let parts = [];
+  if (view.mode === 'search') {
+    parts = [
+      `<span onclick="setView('years')">All years</span>`,
+      `<span class="sep">›</span>`,
+      `<span>Search</span>`
+    ];
+  } else if (view.mode === 'achievements') {
+    parts = [
+      `<span onclick="setView('years')">All years</span>`,
+      `<span class="sep">›</span>`,
+      `<span>✦ Achievements</span>`
+    ];
+  } else if (view.mode === 'years') {
+    parts = [`<span>All years</span>`];
+  } else if (view.mode === 'months') {
+    parts = [
+      `<span onclick="setView('years')">All years</span>`,
+      `<span class="sep">›</span>`,
+      `<span>${view.year}</span>`
+    ];
+  } else if (view.mode === 'days') {
+    parts = [
+      `<span onclick="setView('years')">All years</span>`,
+      `<span class="sep">›</span>`,
+      `<span onclick="setView('months', view.year)">${view.year}</span>`,
+      `<span class="sep">›</span>`,
+      `<span>${MONTHS[view.month-1]}</span>`
+    ];
+  }
+  bc.innerHTML = parts.join('');
+}
+
+// ─── View router ───────────────────────────────────────────────────────────
+function setView(mode, year=null, month=null) {
+  view = { mode, year, month };
+  render();
+}
+function render() {
+  renderStats();
+  renderBreadcrumb();
+  const vc = document.getElementById('viewContainer');
+  vc.style.animation = 'none';
+  vc.offsetHeight; // reflow
+  vc.style.animation = '';
+  if (view.mode === 'years')         renderYears();
+  else if (view.mode === 'months')       renderMonths();
+  else if (view.mode === 'days')         renderDays();
+  else if (view.mode === 'search')       renderSearch();
+  else if (view.mode === 'achievements') renderAchievements();
+}
+
+// ─── Years view ────────────────────────────────────────────────────────────
+function getChapterLabel(year) {
+  const age = year - birthYear;
+  if (age < 0) return 'Before you';
+  if (age < 5) return 'Early childhood';
+  if (age < 13) return 'Childhood';
+  if (age < 18) return 'Teenage years';
+  if (age < 25) return 'Early adulthood';
+  if (age < 35) return 'Twenties & beyond';
+  if (age < 45) return 'Thirties';
+  if (age < 55) return 'Forties';
+  if (age < 65) return 'Fifties';
+  if (age < 75) return 'Sixties';
+  return 'Elder wisdom';
+}
+
+function renderYears() {
+  const currentYear = today.getFullYear();
+  const startYear = birthYear;
+  const endYear = birthYear + LIFE_YEARS;
+
+  // Group years by chapter
+  const chapters = {};
+  for (let y = startYear; y <= endYear; y++) {
+    const ch = getChapterLabel(y);
+    if (!chapters[ch]) chapters[ch] = [];
+    chapters[ch].push(y);
+  }
+
+  // Count entries per year
+  const yearCounts = {};
+  Object.keys(data).forEach(k => {
+    const y = parseInt(k.slice(0,4));
+    yearCounts[y] = (yearCounts[y]||0) + 1;
+  });
+
+  const vc = document.getElementById('viewContainer');
+  let html = `
+    <div class="pill-row">
+      <div class="pill active">Life map</div>
+      <div class="pill" onclick="setView('achievements')">✦ Achievements</div>
+      <div class="pill" onclick="setView('search')">Search</div>
+    </div>
+  `;
+
+  Object.entries(chapters).forEach(([ch, years]) => {
+    const chHasEntries = years.some(y => yearCounts[y] > 0);
+    html += `<div class="chapter-section">
+      <div class="chapter-title">${ch} <small>${years[0]}–${years[years.length-1]}</small></div>
+      <div class="year-grid">`;
+    years.forEach(y => {
+      const count = yearCounts[y] || 0;
+      const isCurrent = y === currentYear;
+      const isFuture = y > currentYear;
+      let cls = '';
+      if (isCurrent) cls = 'is-current';
+      else if (count > 0) cls = 'has-entries';
+      // Mini dots: show up to 12 dots representing months
+      let dots = '';
+      for (let m = 1; m <= 12; m++) {
+        const mKey = `${y}-${String(m).padStart(2,'0')}`;
+        const filled = Object.keys(data).some(k => k.startsWith(mKey));
+        dots += `<div class="year-dot ${filled ? 'filled' : ''}"></div>`;
+      }
+      // Collect unique chapter tags for this year
+      const yearChapters = [...new Set(
+        Object.entries(data)
+          .filter(([k,e]) => parseInt(k.slice(0,4)) === y && e.chapter)
+          .map(([,e]) => e.chapter)
+      )].slice(0, 3);
+      const chapHtml = yearChapters.length
+        ? `<div class="year-chapters">${yearChapters.map(c => `<span class="year-ch-pill">${c}</span>`).join('')}</div>`
+        : '';
+      html += `<div class="year-card ${cls}" onclick="setView('months',${y})">
+        <span class="year-num">${y}</span>
+        <div class="year-dot-row">${dots}</div>
+        <span class="year-label-small">${isFuture ? '' : (count ? count+' day'+(count>1?'s':'') : 'no entries')}</span>
+        ${chapHtml}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  vc.innerHTML = html;
+}
+
+// ─── Months view ───────────────────────────────────────────────────────────
+function renderMonths() {
+  const y = view.year;
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const vc = document.getElementById('viewContainer');
+
+  const ageInYear = y - BIRTH_DATE.getFullYear();
+  let html = `<div class="view-title">${y} <small>${ageInYear >= 0 ? `age ${ageInYear}–${ageInYear+1}` : ''}</small></div>
+    <div class="month-grid">`;
+  for (let m = 1; m <= 12; m++) {
+    const mStr = `${y}-${String(m).padStart(2,'0')}`;
+    const count = Object.keys(data).filter(k => k.startsWith(mStr)).length;
+    const days = daysInMonth(y, m);
+    const pct = Math.round((count / days) * 100);
+    const isCurrent = y === currentYear && m === currentMonth;
+    // Collect chapter tags for this month
+    const mChapters = [...new Set(
+      Object.entries(data)
+        .filter(([k,e]) => k.startsWith(mStr) && e.chapter)
+        .map(([,e]) => e.chapter)
+    )].slice(0,2);
+    const mChapHtml = mChapters.length
+      ? `<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;">${mChapters.map(c=>`<span style="font-size:0.6rem;padding:1px 7px;border-radius:99px;background:rgba(201,169,110,0.15);color:var(--gold);">${c}</span>`).join('')}</div>`
+      : '';
+    html += `<div class="month-card ${count>0?'has-entries':''}" onclick="setView('days',${y},${m})">
+      <span class="month-name">${MONTHS[m-1]}</span>
+      <span class="month-count">${count} / ${days} days ${isCurrent ? '· now' : ''}</span>
+      <div class="month-bar"><div class="month-bar-fill" style="width:${pct}%"></div></div>
+      ${mChapHtml}
+    </div>`;
+  }
+  html += `</div>`;
+  vc.innerHTML = html;
+}
+
+// ─── Days view ─────────────────────────────────────────────────────────────
+function renderDays() {
+  const y = view.year, m = view.month;
+  const totalDays = daysInMonth(y, m);
+  const firstDay = firstDayOfMonth(y, m);
+  const todayKey = todayStr();
+  const vc = document.getElementById('viewContainer');
+
+  let html = `<div class="view-title">${MONTHS[m-1]} ${y}</div>
+    <div class="day-grid">`;
+  DAYS_SHORT.forEach(d => { html += `<div class="day-header">${d}</div>`; });
+  // empty cells before first
+  for (let i = 0; i < firstDay; i++) html += `<div class="day-cell empty"></div>`;
+  for (let d = 1; d <= totalDays; d++) {
+    const key = fmtDate(y, m, d);
+    const entry = data[key];
+    const isToday = key === todayKey;
+    let cls = '';
+    if (entry) cls = 'has-entry';
+    else if (isToday) cls = 'today';
+    const stars = entry ? starsFor(entry) : 0;
+    html += `<div class="day-cell ${cls}" onclick="openEntry('${key}')">
+      ${d}${entry && stars > 0 ? `<span class="star-badge">${'★'.repeat(stars)}</span>` : ''}
+    </div>`;
+  }
+  html += `</div>`;
+
+  // Journal list below calendar
+  const monthEntries = Object.entries(data)
+    .filter(([k]) => k.startsWith(`${y}-${String(m).padStart(2,'0')}`))
+    .sort(([a],[b]) => a.localeCompare(b));
+  if (monthEntries.length > 0) {
+    html += `<div style="margin-top:2rem;">`;
+    monthEntries.forEach(([k, e]) => {
+      const day = parseInt(k.slice(8));
+      const short = e.journal ? e.journal.slice(0, 100) + (e.journal.length > 100 ? '…' : '') : '';
+      html += `<div class="search-result" onclick="openEntry('${k}')">
+        <div class="sr-date">${MONTHS[m-1]} ${day}, ${y}${e.chapter ? ` · ${e.chapter}` : ''} · ${starsFor(e)} ★</div>
+        <div class="sr-text">${short || '<em style="opacity:0.5">No text written</em>'}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  vc.innerHTML = html;
+}
+
+// ─── Achievements view ─────────────────────────────────────────────────────
+function renderAchievements() {
+  const vc = document.getElementById('viewContainer');
+
+  // Gather all entries with a chapter tag, plus allow future-dated entries as "dreams"
+  const allTagged = Object.entries(data)
+    .filter(([, e]) => e.chapter && e.chapter.trim())
+    .sort(([a], [b]) => a.localeCompare(b));
+
+  if (!allTagged.length) {
+    vc.innerHTML = `
+      <div class="pill-row">
+        <div class="pill" onclick="setView('years')">Life map</div>
+        <div class="pill active">✦ Achievements</div>
+        <div class="pill" onclick="setView('search')">Search</div>
+      </div>
+      <div class="empty-state">
+        <span class="es-icon">✦</span>
+        No achievements yet.<br>
+        Open any day and add a <strong>Chapter / tag</strong><br>
+        — like <em>"First job"</em> or <em>"Moving abroad"</em> —<br>
+        and it will appear here.
+      </div>`;
+    return;
+  }
+
+  // Group by year
+  const byYear = {};
+  allTagged.forEach(([k, e]) => {
+    const y = parseInt(k.slice(0, 4));
+    if (!byYear[y]) byYear[y] = [];
+    byYear[y].push({ key: k, entry: e });
+  });
+
+  // Also group by chapter name for "chapter view"
+  const byChapter = {};
+  allTagged.forEach(([k, e]) => {
+    const ch = e.chapter.trim();
+    if (!byChapter[ch]) byChapter[ch] = [];
+    byChapter[ch].push({ key: k, entry: e });
+  });
+
+  const isFutureKey = k => k > todayStr();
+
+  let html = `
+    <div class="pill-row">
+      <div class="pill" onclick="setView('years')">Life map</div>
+      <div class="pill active">✦ Achievements</div>
+      <div class="pill" onclick="setView('search')">Search</div>
+    </div>
+    <div class="pill-row" id="achViewPills">
+      <div class="pill active" id="achByYear" onclick="switchAchView('year')">By year</div>
+      <div class="pill" id="achByChapter" onclick="switchAchView('chapter')">By chapter</div>
+    </div>
+    <div id="achContent"></div>`;
+  vc.innerHTML = html;
+
+  // Render initial year view
+  renderAchByYear(byYear, isFutureKey);
+}
+
+function switchAchView(mode) {
+  // Re-collect
+  const allTagged = Object.entries(data)
+    .filter(([, e]) => e.chapter && e.chapter.trim())
+    .sort(([a], [b]) => a.localeCompare(b));
+  const isFutureKey = k => k > todayStr();
+  const byYear = {};
+  const byChapter = {};
+  allTagged.forEach(([k, e]) => {
+    const y = parseInt(k.slice(0, 4));
+    if (!byYear[y]) byYear[y] = [];
+    byYear[y].push({ key: k, entry: e });
+    const ch = e.chapter.trim();
+    if (!byChapter[ch]) byChapter[ch] = [];
+    byChapter[ch].push({ key: k, entry: e });
+  });
+  document.getElementById('achByYear').classList.toggle('active', mode === 'year');
+  document.getElementById('achByChapter').classList.toggle('active', mode === 'chapter');
+  if (mode === 'year') renderAchByYear(byYear, isFutureKey);
+  else renderAchByChapter(byChapter, isFutureKey);
+}
+
+function achCardHtml(k, e, isFutureKey) {
+  const [y, m, d] = k.split('-').map(Number);
+  const future = isFutureKey(k);
+  const snippet = (e.journal || '').slice(0, 80) + ((e.journal || '').length > 80 ? '…' : '');
+  return `<div class="achieve-card ${future ? 'future' : ''}" onclick="openEntry('${k}')">
+    <div class="achieve-name">${e.chapter}</div>
+    <div class="achieve-meta">
+      <span>${MONTHS[m-1]} ${d}, ${y}</span>
+      <span class="achieve-status ${future ? 'dream' : 'done'}">${future ? 'dream' : 'done'}</span>
+      <span>${starsFor(e)} ★</span>
+    </div>
+    ${snippet ? `<div class="achieve-snippet">${snippet}</div>` : ''}
+  </div>`;
+}
+
+function renderAchByYear(byYear, isFutureKey) {
+  const container = document.getElementById('achContent');
+  let html = '';
+  const totalAch = Object.values(byYear).reduce((s, v) => s + v.length, 0);
+  html += `<p style="font-size:0.78rem;color:var(--lavender);margin-bottom:1.2rem;">${totalAch} achievement${totalAch !== 1 ? 's' : ''} across ${Object.keys(byYear).length} year${Object.keys(byYear).length !== 1 ? 's' : ''}</p>`;
+  Object.entries(byYear).sort(([a],[b]) => b-a).forEach(([y, items]) => {
+    const age = parseInt(y) - BIRTH_DATE.getFullYear();
+    html += `<div class="achieve-section">
+      <div class="achieve-year-label">
+        ${y} <span class="yr-badge">age ${age >= 0 ? age : '?'}</span>
+      </div>
+      <div class="achieve-grid">
+        ${items.map(({ key, entry }) => achCardHtml(key, entry, isFutureKey)).join('')}
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderAchByChapter(byChapter, isFutureKey) {
+  const container = document.getElementById('achContent');
+  let html = '';
+  const totalCh = Object.keys(byChapter).length;
+  html += `<p style="font-size:0.78rem;color:var(--lavender);margin-bottom:1.2rem;">${totalCh} unique chapter${totalCh !== 1 ? 's' : ''}</p>`;
+  Object.entries(byChapter).sort(([a],[b]) => a.localeCompare(b)).forEach(([ch, items]) => {
+    html += `<div class="achieve-section">
+      <div class="achieve-year-label">
+        ${ch} <span class="yr-badge">${items.length} entr${items.length !== 1 ? 'ies' : 'y'}</span>
+      </div>
+      <div class="achieve-grid">
+        ${items.map(({ key, entry }) => achCardHtml(key, entry, isFutureKey)).join('')}
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ─── Search view ───────────────────────────────────────────────────────────
+function renderSearch() {
+  const vc = document.getElementById('viewContainer');
+  vc.innerHTML = `<div class="view-title">Search journal</div>
+    <input id="searchBar" placeholder="Search by word, chapter, or date…" oninput="doSearch(this.value)" autofocus>
+    <div id="searchResults"></div>`;
+}
+function doSearch(q) {
+  const container = document.getElementById('searchResults');
+  if (!q.trim()) { container.innerHTML = ''; return; }
+  const lq = q.toLowerCase();
+  const matches = Object.entries(data)
+    .filter(([k,e]) =>
+      k.includes(lq) ||
+      (e.journal||'').toLowerCase().includes(lq) ||
+      (e.chapter||'').toLowerCase().includes(lq)
+    )
+    .sort(([a],[b]) => b.localeCompare(a))
+    .slice(0, 40);
+  if (!matches.length) { container.innerHTML = '<p style="color:var(--lavender);font-size:0.85rem;">No entries found.</p>'; return; }
+  container.innerHTML = matches.map(([k,e]) => {
+    const [y,m,d] = k.split('-').map(Number);
+    const short = (e.journal||'').slice(0,120) + ((e.journal||'').length > 120 ? '…' : '');
+    return `<div class="search-result" onclick="openEntry('${k}')">
+      <div class="sr-date">${MONTHS[m-1]} ${d}, ${y}${e.chapter ? ` · ${e.chapter}` : ''} · ${starsFor(e)} ★</div>
+      <div class="sr-text">${short || '<em style="opacity:0.5">No text</em>'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Stars ─────────────────────────────────────────────────────────────────
+function starsFor(e) {
+  if (!e || typeof e !== 'object') return 0;
+  const t = (parseInt(e.growth)||0) + (parseInt(e.heart)||0) + (parseInt(e.self)||0);
+  if (t >= 13) return 3;
+  if (t >= 9) return 2;
+  if (t >= 5) return 1;
+  return 0;
+}
+
+// ─── Entry modal ───────────────────────────────────────────────────────────
+function openEntry(key) {
+  editingDate = key;
+  const [y,m,d] = key.split('-').map(Number);
+  document.getElementById('entryTitle').innerHTML = `<em>${MONTHS[m-1]} ${d}, ${y}</em>`;
+  const e = data[key] || {};
+  document.getElementById('sGrowth').value = e.growth || 3;
+  document.getElementById('sHeart').value = e.heart || 3;
+  document.getElementById('sSelf').value = e.self || 3;
+  document.getElementById('vGrowth').textContent = e.growth || 3;
+  document.getElementById('vHeart').textContent = e.heart || 3;
+  document.getElementById('vSelf').textContent = e.self || 3;
+  document.getElementById('journalText').value = e.journal || '';
+  document.getElementById('chapterText').value = e.chapter || '';
+  document.getElementById('deleteBtn').style.display = data[key] ? '' : 'none';
+  document.getElementById('entryModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('entryModal').classList.remove('open');
+  editingDate = null;
+}
+async function saveEntry() {
+  if (!editingDate) return;
+  const growth = parseInt(document.getElementById('sGrowth').value);
+  const heart = parseInt(document.getElementById('sHeart').value);
+  const self = parseInt(document.getElementById('sSelf').value);
+  const journal = document.getElementById('journalText').value.trim();
+  const chapter = document.getElementById('chapterText').value.trim();
+  data[editingDate] = { growth, heart, self, journal, chapter, ts: Date.now() };
+  await save();
+  closeModal();
+  showToast(`Saved · ${starsFor(data[editingDate])} ★`);
+  render();
+}
+async function deleteEntry() {
+  if (!editingDate || !data[editingDate]) return;
+  delete data[editingDate];
+  await save();
+  closeModal();
+  showToast('Entry deleted');
+  render();
+}
+
+// ─── Export ────────────────────────────────────────────────────────────────
+function exportData() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `becoming-her-${todayStr()}.json`;
+  a.click();
+  showToast('Journal exported');
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ─── Close modal on overlay click ─────────────────────────────────────────
+document.getElementById('entryModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─── Expose to global scope (required for type="module") ──────────────────
+window.setView     = setView;
+window.openEntry   = openEntry;
+window.closeModal  = closeModal;
+window.saveEntry   = saveEntry;
+window.deleteEntry = deleteEntry;
+window.exportData  = exportData;
+window.doSearch    = doSearch;
+window.switchAchView = switchAchView;
+
+// ─── Init ──────────────────────────────────────────────────────────────────
+load(); // starts Firestore live listener → calls render() on first data
+</script>
+</body>
+</html>
